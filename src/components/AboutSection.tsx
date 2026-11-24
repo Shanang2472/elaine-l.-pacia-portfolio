@@ -23,30 +23,31 @@ export function AboutSection() {
   ];
 
   return (
-    <section id="about" className="bg-[#FCFAFA] border-b border-[#EAE3E6]">
-      <div className="mx-auto max-w-6xl px-5 sm:px-8 py-14 md:py-18">
+    <section id="about" className="bg-[#FCFAFA] border-b border-[#EAE3E6] overflow-hidden">
+      <div className="mx-auto max-w-6xl px-5 sm:px-8 py-16 md:py-24">
         {/* Section Label */}
         <motion.p
-          initial={shouldReduceMotion ? false : { opacity: 0, y: 8 }}
+          initial={shouldReduceMotion ? false : { opacity: 0, y: 12 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
-          className="font-mono text-xs font-medium text-[#BE2A52] mb-3 tracking-widest uppercase"
+          viewport={{ once: true, amount: 0.2 }}
+          transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
+          className="font-mono text-xs font-semibold text-[#BE2A52] mb-4 tracking-widest uppercase flex items-center gap-2"
         >
+          <Sparkles className="h-3.5 w-3.5" />
           About Me
         </motion.p>
 
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-start">
-          {/* Left: Intro Text */}
+          {/* Left: Intro Text with Staggered Scroll Reveal */}
           <motion.div
-            initial={shouldReduceMotion ? false : { opacity: 0, y: 12 }}
+            initial={shouldReduceMotion ? false : { opacity: 0, y: 24 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
-            className="lg:col-span-7 space-y-5"
+            viewport={{ once: true, amount: 0.2 }}
+            transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
+            className="lg:col-span-7 space-y-6"
           >
             <h2
-              className="text-[clamp(1.8rem,4vw,2.75rem)] font-bold leading-tight tracking-tight text-[#18181B]"
+              className="text-[clamp(1.9rem,4vw,2.85rem)] font-bold leading-tight tracking-tight text-[#18181B]"
               style={{ textWrap: 'balance' }}
             >
               Hi, I'm{' '}
@@ -89,45 +90,66 @@ export function AboutSection() {
             </div>
           </motion.div>
 
-          {/* Right: Highlight Cards */}
+          {/* Right: Highlight Cards with Slide In and Elevation */}
           <motion.div
-            initial={shouldReduceMotion ? false : { opacity: 0, y: 12 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.45, delay: 0.08, ease: [0.16, 1, 0.3, 1] }}
+            initial={shouldReduceMotion ? false : { opacity: 0, x: 25 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true, amount: 0.2 }}
+            transition={{ duration: 0.55, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
             className="lg:col-span-5 flex flex-col gap-4"
           >
             {highlights.map((item, idx) => (
               <motion.div
                 key={item.label}
-                initial={shouldReduceMotion ? false : { opacity: 0, x: 12 }}
-                whileInView={{ opacity: 1, x: 0 }}
+                initial={shouldReduceMotion ? false : { opacity: 0, y: 15 }}
+                whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{
-                  duration: 0.35,
+                  duration: 0.4,
                   delay: 0.1 + idx * 0.08,
-                  ease: [0.16, 1, 0.3, 1],
+                  ease: [0.22, 1, 0.36, 1],
                 }}
-                className="flex items-start gap-4 rounded-xl border border-[#EAE3E6] bg-white p-5 sm:p-6"
+                whileHover={
+                  shouldReduceMotion
+                    ? undefined
+                    : {
+                        x: 4,
+                        borderColor: '#BE2A52',
+                        boxShadow: '0 8px 20px -6px rgba(190,42,82,0.1)',
+                      }
+                }
+                className="flex items-start gap-4 rounded-xl border border-[#EAE3E6] bg-white p-5 sm:p-6 shadow-xs transition-all duration-200 cursor-default"
               >
-                <span className="mt-0.5 flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-[#BE2A52]/10">
-                  <item.icon className="h-4.5 w-4.5 text-[#BE2A52]" aria-hidden="true" />
+                <span className="mt-0.5 flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-[#BE2A52]/10 text-[#BE2A52]">
+                  <item.icon className="h-5 w-5" aria-hidden="true" />
                 </span>
                 <div>
-                  <p className="font-semibold text-sm text-[#18181B]">{item.label}</p>
+                  <p className="font-semibold text-sm sm:text-base text-[#18181B]">{item.label}</p>
                   <p className="mt-0.5 text-sm text-[#52525B] leading-snug">{item.detail}</p>
                 </div>
               </motion.div>
             ))}
 
             {/* Quote Card */}
-            <div className="rounded-xl border border-[#BE2A52]/20 bg-[#BE2A52]/5 p-5 sm:p-6">
-              <p className="font-serif italic text-base text-[#8E1B3B] leading-relaxed">
+            <motion.div
+              initial={shouldReduceMotion ? false : { opacity: 0, scale: 0.96 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.45, delay: 0.35, ease: [0.22, 1, 0.36, 1] }}
+              className="rounded-xl border border-[#BE2A52]/25 bg-gradient-to-br from-[#BE2A52]/5 to-[#BE2A52]/10 p-5 sm:p-6 shadow-xs relative overflow-hidden"
+            >
+              <span
+                aria-hidden="true"
+                className="absolute -right-4 -bottom-4 text-7xl font-serif text-[#BE2A52]/10 select-none pointer-events-none"
+              >
+                ”
+              </span>
+              <p className="font-serif italic text-base sm:text-lg text-[#8E1B3B] leading-relaxed relative z-10">
                 "Being a student and a mother at the same time taught me that strength isn't the
                 absence of struggle — it's choosing to keep going despite it."
               </p>
-              <p className="mt-3 font-mono text-xs text-[#BE2A52]">— Elaine L. Pacia</p>
-            </div>
+              <p className="mt-3 font-mono text-xs font-semibold text-[#BE2A52] relative z-10">— Elaine L. Pacia</p>
+            </motion.div>
           </motion.div>
         </div>
       </div>

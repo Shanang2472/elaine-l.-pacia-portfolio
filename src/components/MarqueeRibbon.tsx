@@ -1,3 +1,5 @@
+import { motion } from 'motion/react';
+
 const RIBBON_ITEMS = [
   'Administrative Support',
   'Data Encoding',
@@ -10,9 +12,13 @@ const RIBBON_ITEMS = [
 
 export function MarqueeRibbon() {
   return (
-    <div
+    <motion.div
+      initial={{ opacity: 0 }}
+      whileInView={{ opacity: 1 }}
+      viewport={{ once: true }}
+      transition={{ duration: 0.5 }}
       aria-hidden="true"
-      className="no-print w-full overflow-hidden border-b border-[#EAE3E6] bg-[#F7F2F4] py-3 select-none"
+      className="no-print w-full overflow-hidden border-b border-[#EAE3E6] bg-[#F7F2F4] py-3.5 select-none"
     >
       <div className="animate-marquee flex items-center">
         {[0, 1].map((dup) => (
@@ -37,6 +43,6 @@ export function MarqueeRibbon() {
           </div>
         ))}
       </div>
-    </div>
+    </motion.div>
   );
 }

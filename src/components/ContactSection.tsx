@@ -1,5 +1,6 @@
 import { useState, type FormEvent } from 'react';
-import { Check, Copy, Mail, MapPin, Phone, Send } from 'lucide-react';
+import { Check, Copy, Mail, MapPin, Phone, Send, MessageSquare } from 'lucide-react';
+import { motion, useReducedMotion } from 'motion/react';
 import { PORTFOLIO_PROFILE } from '../data/portfolioData';
 
 type CopyField = 'phone' | 'email' | 'address' | 'message' | null;
@@ -12,6 +13,7 @@ export function ContactSection() {
   const [message, setMessage] = useState('');
   const [formStatus, setFormStatus] = useState<'idle' | 'error' | 'ready'>('idle');
   const [errorMessage, setErrorMessage] = useState('');
+  const shouldReduceMotion = useReducedMotion();
 
   const handleCopy = async (field: Exclude<CopyField, null>, value: string) => {
     try {
@@ -58,14 +60,21 @@ export function ContactSection() {
   return (
     <section
       id="contact"
-      className="bg-[#FAF6F7] text-[#18181B]"
+      className="bg-[#FAF6F7] text-[#18181B] border-b border-[#EAE3E6] overflow-hidden"
     >
-      <div className="mx-auto max-w-6xl px-5 sm:px-8 py-14 md:py-20">
+      <div className="mx-auto max-w-6xl px-5 sm:px-8 py-16 md:py-24">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start">
-          {/* Left Column: Direct Contact Details */}
-          <div className="lg:col-span-5 space-y-6">
+          {/* Left Column: Direct Contact Details with Scroll Slide In */}
+          <motion.div
+            initial={shouldReduceMotion ? false : { opacity: 0, x: -30 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true, amount: 0.2 }}
+            transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
+            className="lg:col-span-5 space-y-6"
+          >
             <div className="space-y-2.5">
-              <p className="font-mono text-xs font-medium text-[#BE2A52]">
+              <p className="font-mono text-xs font-semibold text-[#BE2A52] tracking-widest uppercase flex items-center gap-2">
+                <MessageSquare className="h-4 w-4" />
                 04 · Direct Contact
               </p>
               <h2
@@ -82,9 +91,9 @@ export function ContactSection() {
               </p>
             </div>
 
-            <div className="rounded-2xl border border-[#EAE3E6] bg-white divide-y divide-[#F0E9EC]">
+            <div className="rounded-2xl border border-[#EAE3E6] bg-white divide-y divide-[#F0E9EC] shadow-xs overflow-hidden">
               {/* Phone */}
-              <div className="flex items-center justify-between gap-4 p-5">
+              <div className="flex items-center justify-between gap-4 p-5 hover:bg-[#FAF4F6] transition-colors">
                 <div className="min-w-0">
                   <p className="text-xs text-[#71717A] flex items-center gap-1.5">
                     <Phone className="h-3.5 w-3.5 text-[#BE2A52]" aria-hidden="true" />
@@ -119,7 +128,7 @@ export function ContactSection() {
               </div>
 
               {/* Email */}
-              <div className="flex items-center justify-between gap-4 p-5">
+              <div className="flex items-center justify-between gap-4 p-5 hover:bg-[#FAF4F6] transition-colors">
                 <div className="min-w-0">
                   <p className="text-xs text-[#71717A] flex items-center gap-1.5">
                     <Mail className="h-3.5 w-3.5 text-[#BE2A52]" aria-hidden="true" />
@@ -154,7 +163,7 @@ export function ContactSection() {
               </div>
 
               {/* Address */}
-              <div className="flex items-start justify-between gap-4 p-5">
+              <div className="flex items-start justify-between gap-4 p-5 hover:bg-[#FAF4F6] transition-colors">
                 <div className="min-w-0">
                   <p className="text-xs text-[#71717A] flex items-center gap-1.5">
                     <MapPin className="h-3.5 w-3.5 text-[#BE2A52]" aria-hidden="true" />
@@ -185,14 +194,20 @@ export function ContactSection() {
                 </button>
               </div>
             </div>
-          </div>
+          </motion.div>
 
-          {/* Right Column: Clean Light Inquiry Form */}
-          <div className="lg:col-span-7">
+          {/* Right Column: Clean Light Inquiry Form with Slide In */}
+          <motion.div
+            initial={shouldReduceMotion ? false : { opacity: 0, x: 30 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true, amount: 0.2 }}
+            transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
+            className="lg:col-span-7"
+          >
             <form
               onSubmit={handleSubmit}
               noValidate
-              className="rounded-2xl border border-[#EAE3E6] bg-white p-6 sm:p-8 space-y-5"
+              className="rounded-2xl border border-[#EAE3E6] bg-white p-6 sm:p-8 space-y-5 shadow-xs"
             >
               <div>
                 <h3 className="font-serif text-2xl font-semibold text-[#18181B]">
@@ -224,7 +239,7 @@ export function ContactSection() {
                       if (formStatus === 'error') setFormStatus('idle');
                     }}
                     placeholder="e.g. Maria Santos"
-                    className="w-full min-h-[44px] rounded-lg border border-[#DED6D9] bg-[#FCFAFA] px-3.5 py-2 text-sm text-[#18181B] placeholder:text-[#A1A1AA] focus:border-[#BE2A52] focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#BE2A52]/20"
+                    className="w-full min-h-[44px] rounded-lg border border-[#DED6D9] bg-[#FCFAFA] px-3.5 py-2 text-sm text-[#18181B] placeholder:text-[#A1A1AA] focus:border-[#BE2A52] focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#BE2A52]/20 transition-all"
                   />
                 </div>
 
@@ -244,7 +259,7 @@ export function ContactSection() {
                       if (formStatus === 'error') setFormStatus('idle');
                     }}
                     placeholder="name@company.com"
-                    className="w-full min-h-[44px] rounded-lg border border-[#DED6D9] bg-[#FCFAFA] px-3.5 py-2 text-sm text-[#18181B] placeholder:text-[#A1A1AA] focus:border-[#BE2A52] focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#BE2A52]/20"
+                    className="w-full min-h-[44px] rounded-lg border border-[#DED6D9] bg-[#FCFAFA] px-3.5 py-2 text-sm text-[#18181B] placeholder:text-[#A1A1AA] focus:border-[#BE2A52] focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#BE2A52]/20 transition-all"
                   />
                 </div>
               </div>
@@ -262,7 +277,7 @@ export function ContactSection() {
                   value={organization}
                   onChange={(e) => setOrganization(e.target.value)}
                   placeholder="e.g. Metro Business Group"
-                  className="w-full min-h-[44px] rounded-lg border border-[#DED6D9] bg-[#FCFAFA] px-3.5 py-2 text-sm text-[#18181B] placeholder:text-[#A1A1AA] focus:border-[#BE2A52] focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#BE2A52]/20"
+                  className="w-full min-h-[44px] rounded-lg border border-[#DED6D9] bg-[#FCFAFA] px-3.5 py-2 text-sm text-[#18181B] placeholder:text-[#A1A1AA] focus:border-[#BE2A52] focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#BE2A52]/20 transition-all"
                 />
               </div>
 
@@ -282,7 +297,7 @@ export function ContactSection() {
                     if (formStatus === 'error') setFormStatus('idle');
                   }}
                   placeholder="Share role details, interview schedule, or questions..."
-                  className="w-full rounded-lg border border-[#DED6D9] bg-[#FCFAFA] px-3.5 py-2.5 text-sm text-[#18181B] placeholder:text-[#A1A1AA] focus:border-[#BE2A52] focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#BE2A52]/20 resize-y"
+                  className="w-full rounded-lg border border-[#DED6D9] bg-[#FCFAFA] px-3.5 py-2.5 text-sm text-[#18181B] placeholder:text-[#A1A1AA] focus:border-[#BE2A52] focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#BE2A52]/20 resize-y transition-all"
                 />
               </div>
 
@@ -313,7 +328,7 @@ export function ContactSection() {
               <div className="flex flex-wrap items-center justify-between gap-3 pt-1">
                 <button
                   type="submit"
-                  className="inline-flex min-h-[44px] items-center justify-center gap-2 rounded-lg bg-[#BE2A52] px-6 py-2.5 text-sm font-semibold text-white transition-colors duration-150 hover:bg-[#9E1F42] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#BE2A52] focus-visible:ring-offset-2 whitespace-nowrap shrink-0 cursor-pointer"
+                  className="inline-flex min-h-[46px] items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-[#BE2A52] to-[#D94070] px-7 py-2.5 text-sm font-semibold text-white shadow-md shadow-[#BE2A52]/20 transition-all duration-200 hover:shadow-lg hover:shadow-[#BE2A52]/30 hover:scale-[1.02] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#BE2A52] focus-visible:ring-offset-2 whitespace-nowrap shrink-0 cursor-pointer"
                 >
                   <Send className="h-4 w-4" aria-hidden="true" />
                   <span>Send via Email</span>
@@ -322,7 +337,7 @@ export function ContactSection() {
                 <button
                   type="button"
                   onClick={() => handleCopy('message', formattedInquiry)}
-                  className="inline-flex min-h-[44px] items-center justify-center gap-1.5 rounded-lg border border-[#EAE3E6] bg-[#FCFAFA] px-4 py-2 text-xs font-medium text-[#18181B] transition-colors hover:border-[#BE2A52] whitespace-nowrap shrink-0 cursor-pointer"
+                  className="inline-flex min-h-[46px] items-center justify-center gap-1.5 rounded-xl border border-[#EAE3E6] bg-[#FCFAFA] px-5 py-2 text-xs font-medium text-[#18181B] transition-all hover:border-[#BE2A52] hover:bg-white whitespace-nowrap shrink-0 cursor-pointer"
                 >
                   {copiedField === 'message' ? (
                     <>
@@ -338,7 +353,7 @@ export function ContactSection() {
                 </button>
               </div>
             </form>
-          </div>
+          </motion.div>
         </div>
       </div>
     </section>

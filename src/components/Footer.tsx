@@ -1,4 +1,5 @@
 import { ArrowUp } from 'lucide-react';
+import { motion } from 'motion/react';
 import { NAV_LINKS, PORTFOLIO_PROFILE } from '../data/portfolioData';
 
 export function Footer() {
@@ -8,7 +9,13 @@ export function Footer() {
 
   return (
     <footer className="no-print border-t border-[#EAE3E6] bg-white text-[#52525B]">
-      <div className="mx-auto flex max-w-6xl flex-col sm:flex-row items-start sm:items-center justify-between gap-6 px-5 sm:px-8 py-8">
+      <motion.div
+        initial={{ opacity: 0, y: 15 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+        className="mx-auto flex max-w-6xl flex-col sm:flex-row items-start sm:items-center justify-between gap-6 px-5 sm:px-8 py-8"
+      >
         <div>
           <p className="font-serif text-lg font-semibold text-[#18181B]">
             {PORTFOLIO_PROFILE.fullName}
@@ -33,13 +40,13 @@ export function Footer() {
             type="button"
             onClick={scrollToTop}
             aria-label="Scroll back to top"
-            className="inline-flex min-h-[38px] items-center gap-1.5 rounded-lg border border-[#EAE3E6] bg-[#FCFAFA] px-3 py-1.5 text-xs font-medium text-[#18181B] transition-colors hover:border-[#BE2A52] cursor-pointer"
+            className="inline-flex min-h-[38px] items-center gap-1.5 rounded-lg border border-[#EAE3E6] bg-[#FCFAFA] px-3 py-1.5 text-xs font-medium text-[#18181B] transition-all hover:border-[#BE2A52] hover:bg-white hover:text-[#BE2A52] cursor-pointer"
           >
             <span>Top</span>
             <ArrowUp className="h-3.5 w-3.5" aria-hidden="true" />
           </button>
         </div>
-      </div>
+      </motion.div>
     </footer>
   );
 }

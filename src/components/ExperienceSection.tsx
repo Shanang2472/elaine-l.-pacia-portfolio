@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { ArrowRight, Check } from 'lucide-react';
+import { ArrowRight, Check, Briefcase } from 'lucide-react';
 import { AnimatePresence, motion, useReducedMotion } from 'motion/react';
 import { EXPERIENCE_LIST } from '../data/portfolioData';
 
@@ -20,12 +20,19 @@ export function ExperienceSection() {
   return (
     <section
       id="experience"
-      className="mx-auto max-w-6xl px-5 sm:px-8 py-14 md:py-20 border-b border-[#EAE3E6]"
+      className="mx-auto max-w-6xl px-5 sm:px-8 py-16 md:py-24 border-b border-[#EAE3E6] overflow-hidden"
     >
-      {/* Organized Section Header */}
-      <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-10">
+      {/* Organized Section Header with Scroll Transition */}
+      <motion.div
+        initial={shouldReduceMotion ? false : { opacity: 0, y: 24 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, amount: 0.2 }}
+        transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+        className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-12"
+      >
         <div className="space-y-2">
-          <p className="font-mono text-xs font-medium text-[#BE2A52]">
+          <p className="font-mono text-xs font-semibold text-[#BE2A52] tracking-widest uppercase flex items-center gap-2">
+            <Briefcase className="h-4 w-4" />
             01 · Work Experience
           </p>
           <h2
@@ -42,10 +49,16 @@ export function ExperienceSection() {
         <p className="max-w-md text-sm sm:text-base leading-relaxed text-[#52525B]">
           Select a role on the left to view key responsibilities, workplace tools, and core strengths.
         </p>
-      </div>
+      </motion.div>
 
-      {/* Light Master-Detail Split Layout */}
-      <div className="grid grid-cols-1 lg:grid-cols-12 rounded-2xl border border-[#EAE3E6] bg-white overflow-hidden">
+      {/* Light Master-Detail Split Layout with Scroll Reveal */}
+      <motion.div
+        initial={shouldReduceMotion ? false : { opacity: 0, y: 30 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, amount: 0.15 }}
+        transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+        className="grid grid-cols-1 lg:grid-cols-12 rounded-2xl border border-[#EAE3E6] bg-white overflow-hidden shadow-sm"
+      >
         {/* Left Role Selector Index */}
         <div
           role="tablist"
@@ -61,7 +74,7 @@ export function ExperienceSection() {
                 role="tab"
                 aria-selected={isSelected}
                 onClick={() => setSelectedId(item.id)}
-                className={`group flex-1 text-left p-6 sm:p-7 transition-colors duration-150 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-[#BE2A52] ${
+                className={`group flex-1 text-left p-6 sm:p-7 transition-all duration-200 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-[#BE2A52] ${
                   isSelected
                     ? 'bg-[#FDF4F6]'
                     : 'bg-white hover:bg-[#FAF6F7]'
@@ -74,7 +87,7 @@ export function ExperienceSection() {
                   <span className="text-[#71717A]">{item.duration}</span>
                 </div>
 
-                <h3 className="mt-3 font-serif text-2xl font-semibold text-[#18181B] leading-snug">
+                <h3 className="mt-3 font-serif text-2xl font-semibold text-[#18181B] leading-snug group-hover:text-[#BE2A52] transition-colors">
                   {item.organization}
                 </h3>
 
@@ -83,10 +96,10 @@ export function ExperienceSection() {
                     {item.role}
                   </p>
                   <span
-                    className={`inline-flex items-center gap-1 text-xs font-semibold transition-transform duration-150 ${
+                    className={`inline-flex items-center gap-1 text-xs font-semibold transition-transform duration-200 ${
                       isSelected
                         ? 'text-[#BE2A52]'
-                        : 'text-[#71717A] group-hover:text-[#18181B] group-hover:translate-x-0.5'
+                        : 'text-[#71717A] group-hover:text-[#18181B] group-hover:translate-x-1'
                     }`}
                   >
                     <span>{isSelected ? 'Selected' : 'View'}</span>
@@ -98,15 +111,15 @@ export function ExperienceSection() {
           })}
         </div>
 
-        {/* Right Detail Panel (Clean Light Surface) */}
+        {/* Right Detail Panel */}
         <div className="lg:col-span-7 bg-white p-6 sm:p-9 flex flex-col justify-between min-h-[340px]">
           <AnimatePresence mode="wait">
             <motion.div
               key={activeRole.id}
-              initial={shouldReduceMotion ? false : { opacity: 0, y: 6 }}
+              initial={shouldReduceMotion ? false : { opacity: 0, y: 12 }}
               animate={{ opacity: 1, y: 0 }}
-              exit={shouldReduceMotion ? undefined : { opacity: 0, y: -4 }}
-              transition={{ duration: 0.18, ease: [0.16, 1, 0.3, 1] }}
+              exit={shouldReduceMotion ? undefined : { opacity: 0, y: -8 }}
+              transition={{ duration: 0.22, ease: [0.22, 1, 0.36, 1] }}
               className="space-y-6"
             >
               <div className="border-b border-[#F0E9EC] pb-5">
@@ -126,7 +139,7 @@ export function ExperienceSection() {
               </p>
 
               <div className="space-y-3">
-                <p className="text-xs font-semibold text-[#18181B]">
+                <p className="text-xs font-semibold text-[#18181B] uppercase tracking-wider">
                   Key Responsibilities &amp; Contributions
                 </p>
                 <ul className="space-y-2.5">
@@ -161,7 +174,7 @@ export function ExperienceSection() {
             </button>
           </div>
         </div>
-      </div>
+      </motion.div>
     </section>
   );
 }

@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { motion, useScroll, useSpring } from 'motion/react';
 import { AboutSection } from './components/AboutSection';
 import { ContactSection } from './components/ContactSection';
 import { EducationSection } from './components/EducationSection';
@@ -14,6 +15,14 @@ import { NAV_LINKS } from './data/portfolioData';
 export default function App() {
   const [activeSection, setActiveSection] = useState<string>('objective');
   const [resumeOpen, setResumeOpen] = useState(false);
+
+  // Smooth scroll progress bar across the entire page
+  const { scrollYProgress } = useScroll();
+  const scaleX = useSpring(scrollYProgress, {
+    stiffness: 100,
+    damping: 30,
+    restDelta: 0.001,
+  });
 
   useEffect(() => {
     const sectionIds = NAV_LINKS.map((link) => link.id);
@@ -44,7 +53,13 @@ export default function App() {
   }, []);
 
   return (
-    <div className="min-h-screen flex flex-col bg-[#FCFAFA] text-[#18181B]">
+    <div className="min-h-screen flex flex-col bg-[#FCFAFA] text-[#18181B] relative selection:bg-[#BE2A52]/15 selection:text-[#BE2A52]">
+      {/* 🚀 Sleek Scroll Progress Bar at the Top */}
+      <motion.div
+        style={{ scaleX }}
+        className="fixed top-0 left-0 right-0 h-1 bg-gradient-to-r from-[#BE2A52] via-[#E8637F] to-[#FF8FAB] origin-left z-50 pointer-events-none"
+      />
+
       <Navbar
         activeSection={activeSection}
         onOpenResume={() => setResumeOpen(true)}
