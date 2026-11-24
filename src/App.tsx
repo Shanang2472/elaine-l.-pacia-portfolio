@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { motion, useScroll, useSpring } from 'motion/react';
 import { AboutSection } from './components/AboutSection';
+import { AudioPlayer } from './components/AudioPlayer';
 import { ContactSection } from './components/ContactSection';
 import { EducationSection } from './components/EducationSection';
 import { ExperienceSection } from './components/ExperienceSection';
@@ -76,6 +77,8 @@ export default function App() {
       </main>
 
       <Footer />
+
+      <AudioPlayer />
 
       <ResumeModal isOpen={resumeOpen} onClose={() => setResumeOpen(false)} />
     </div>
