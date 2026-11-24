@@ -28,6 +28,35 @@
   }
 }
 
+@keyframes float-slow {
+  0%, 100% { transform: translateY(0px) rotate(0deg); }
+  33% { transform: translateY(-18px) rotate(2deg); }
+  66% { transform: translateY(10px) rotate(-1.5deg); }
+}
+
+@keyframes float-medium {
+  0%, 100% { transform: translateY(0px) rotate(0deg); }
+  40% { transform: translateY(-12px) rotate(-3deg); }
+  70% { transform: translateY(8px) rotate(2deg); }
+}
+
+@keyframes shimmer-in {
+  0% { opacity: 0; transform: scale(0.9) translateY(8px); }
+  100% { opacity: 1; transform: scale(1) translateY(0px); }
+}
+
+.animate-float-slow {
+  animation: float-slow 8s ease-in-out infinite;
+}
+
+.animate-float-medium {
+  animation: float-medium 6s ease-in-out infinite;
+}
+
+.animate-shimmer-in {
+  animation: shimmer-in 0.5s ease-out forwards;
+}
+
 .animate-marquee {
   display: flex;
   width: max-content;

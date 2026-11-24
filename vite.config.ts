@@ -32,6 +32,9 @@ export default defineConfig(() => {
       alias: {
         '@': path.resolve(__dirname, '.'),
       },
+      // Force a single React instance (prevents "Invalid hook call" when
+      // motion/react or other packages bundle their own React copy)
+      dedupe: ['react', 'react-dom'],
     },
     server: {
       // HMR is disabled in AI Studio via DISABLE_HMR env var.
@@ -39,6 +42,10 @@ export default defineConfig(() => {
       hmr: process.env.DISABLE_HMR !== 'true',
       // Disable file watching when DISABLE_HMR is true to save CPU during agent edits.
       watch: process.env.DISABLE_HMR === 'true' ? null : {},
+    },
+    optimizeDeps: {
+      // Pre-bundle these together so Vite only ships one React copy
+      include: ['react', 'react-dom', 'react-dom/client', 'motion/react'],
     },
   };
 });
